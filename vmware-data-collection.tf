@@ -17,10 +17,3 @@ data "vsphere_resource_pool" "esx" {
   name          = each.value.name
   datacenter_id = data.vsphere_datacenter.dc.id
 }
-# PortGroups
-data "vsphere_network" "pg" {
-  depends_on    = [module.aci]
-  for_each      = var.zones
-  name          = format("%s|%s|%s",var.tenant, var.environment, each.value.name)
-  datacenter_id = data.vsphere_datacenter.dc.id
-}
