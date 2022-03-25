@@ -1,6 +1,5 @@
 # Vm creation
 resource "vsphere_virtual_machine" "vm" {
-  depends_on       = [module.aci]
   for_each         = var.vms
   name             = format("%s-%s",var.tenant, each.value.name)
   resource_pool_id = data.vsphere_resource_pool.esx[each.value.esx].id
@@ -10,10 +9,6 @@ resource "vsphere_virtual_machine" "vm" {
   wait_for_guest_net_timeout = 0
   guest_id = data.vsphere_virtual_machine.template.guest_id
   scsi_type = data.vsphere_virtual_machine.template.scsi_type
-  network_interface {
-    network_id   = data.vsphere_network.pg[each.value.zone].id
-    adapter_type = data.vsphere_virtual_machine.template.network_interface_types[0]
-  }
   disk {
    label            = "disk0"
    size             = data.vsphere_virtual_machine.template.disks.0.size
