@@ -4,9 +4,3 @@ provider "vsphere" {
   password = var.vsphere_password
   allow_unverified_ssl = true
 }
-provider "aci" {
-  username = var.aci_user
-  password = var.aci_password
-  url      = var.aci_controller
-  insecure = true
-}
